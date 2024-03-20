@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\productRequest;
-use App\Models\Product;
+use App\Models\product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class productController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products=Product::all();
+        $products=product::all();
         return response()->json(["data"=>$products]);
     }
 
@@ -22,8 +22,8 @@ class ProductController extends Controller
      */
     public function store(productRequest $request)
     {
-        $input=$request->validated();
-        Product::create($input);
+        $input= $request->validated();
+        product::create($input);
         return response()->json(["message"=>"product is added successfully"]);
     }
 
@@ -32,8 +32,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product=Product::findOrFail($id);
-        return response()->json(["data"=>$product]);
+      $product= product::findOrFail($id);
+      return response()->json(["data"=>$product]);
     }
 
     /**
@@ -41,11 +41,10 @@ class ProductController extends Controller
      */
     public function update(productRequest $request, string $id)
     {
-        $input=$request->validated();
-        $product=Product::findOrFail($id);
+        $input= $request->validated();
+        $product= product::findOrFail($id);
         $product->update($input);
         return response()->json(["message"=>"product is updated successfully"]);
-
     }
 
     /**
@@ -53,14 +52,14 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-    $product=Product::findOrFail($id);
-    $product->delete();
-    return response()->json(["message"=>"product is deleted successfully"]);
+        $product= product::findOrFail($id);
+        $product->delete();
+        return response()->json(["message"=>"product is deleted successfully"]);
     }
 
-    public function showByCategory(string $categoryID)
+    public function showByCategory( $categoryId)
     {
-        $products=Product::where('categoryId',$categoryID)->get()->load('category');
+        $products= product::where('categoryId', $categoryId)->get();//->load('category');
         return response()->json(["data"=>$products]);
     }
 }

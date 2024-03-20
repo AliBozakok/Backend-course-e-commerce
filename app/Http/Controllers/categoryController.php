@@ -12,8 +12,8 @@ class categoryController extends Controller
      */
     public function index()
     {
-        $category= Category::all();
-        return response()->json(["data"=>$category]);
+      $categoy= Category::all();
+      return response()->json(["data"=>$categoy]);
     }
 
     /**
@@ -21,12 +21,9 @@ class categoryController extends Controller
      */
     public function store(Request $request)
     {
-        $input= $request->validate([
-            'name'=>['required','string'
-            ]]);
-            Category::create($input);
-            return response()->json(["message"=>"category is added successfully"]);
-
+        $input= $request->validate(['name'=>['required','string']]);
+        Category::create($input);
+        return response()->json(["message"=>"categoy is added successfully"]);
     }
 
     /**
@@ -34,8 +31,8 @@ class categoryController extends Controller
      */
     public function show(string $id)
     {
-        $category=Category::findOrFail($id);
-        return response()->json(["data"=>$category]);
+        $categoy=Category::findOrFail($id);
+        return response()->json(["data"=>$categoy]);
     }
 
     /**
@@ -43,13 +40,10 @@ class categoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $input=$request->validate([
-            'name'=>['required','string']
-        ]);
-        $category=Category::findOrFail($id);
-        $category->update($input);
-        return response()->json(["message"=>"category is updated successfully"]);
-
+        $input= $request->validate(['name'=>['required','string']]);
+        $categoy=Category::findOrFail($id);
+        $categoy->update($input);
+        return response()->json(["message"=>"categoy is updated successfully"]);
     }
 
     /**
@@ -57,9 +51,8 @@ class categoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category=Category::findOrFail($id);
-        $category->delete();
-        return response()->json(["message"=>"category is deleted successfully"]);
-
+        $categoy=Category::findOrFail($id);
+        $categoy->delete();
+        return response()->json(["message"=>"categoy is deleted successfully"]);
     }
 }

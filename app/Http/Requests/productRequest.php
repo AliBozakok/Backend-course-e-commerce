@@ -22,12 +22,12 @@ class productRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=>['required','string'],
-            'description'=>['required'],
-            'imgUrl'=>['required','image'],
-            'price'=>['required','numeric'],
-            'quantityInStock'=>['required','numeric'],
-            'categoryId'=>['required','numeric']
+            'title'=> 'required','string',
+            'description'=> 'required',
+            'imgUrl'=> 'required','string',
+            'price'=> 'required','numeric',
+            'qunatityInStock'=>'required',
+            'categoryId'=> 'required'
         ];
     }
 }

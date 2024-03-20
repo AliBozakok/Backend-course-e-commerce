@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('imgUrl');
             $table->double('price',8,2);
-            $table->integer('quantityInStock');
+            $table->integer('qunatityInStock');
             $table->integer('categoryId');
             $table->timestamps();
         });
