@@ -22,4 +22,9 @@ class product extends Model
     {
         $this->belongsTo(Category::class,'categoryId','id');
     }
+
+    public function scopeGetActive()
+    {
+        return $this->where('qunatityInStock','!=',0);
+    }
 }

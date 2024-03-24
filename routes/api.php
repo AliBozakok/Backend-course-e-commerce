@@ -4,6 +4,7 @@ use App\Http\Controllers\adminController;
 use App\Http\Controllers\categoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productController as ControllersProductController;
+use App\Http\Controllers\userProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,3 +40,7 @@ Route::group([
     Route::get('me', [adminController::class,'me']);
 
 });
+
+
+Route::apiResource('userProduct',userProductController::class)->only(['index','show']);
+Route::get('recentUserProduct', [userProductController::class,'recent']);
