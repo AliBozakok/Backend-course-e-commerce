@@ -27,4 +27,11 @@ class Cart extends Model
         return $this->qty * $this->product->price;
     }
 
+    public function decrease()
+    {
+        $this->product->update([
+            'qunatityInStock'=> $this->product->qunatityInStock - $this->qty
+        ]);
+    }
+
 }

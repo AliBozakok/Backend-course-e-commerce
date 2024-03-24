@@ -47,23 +47,49 @@ class cartController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        $caartItems= cart::findOrFail($id);
-        return new cartResource($caartItems);
-    }
+    // public function show(string $id)
+    // {
+    //     $caartItems= cart::findOrFail($id);
+    //     return new cartResource($caartItems);
+    // }
 
     /**
      * Update the specified resource in storage.
      */
+    //add qty for specific product
     public function update(Request $request, string $id)
     {
-        //
+        $input= $request->validate(['qty'=>['required','numeric']]);
+        $item= cart::where('productId',$id)->where('userId',auth()->id())->firstOrFail();
+        $cartQty=$item->qty +1;
+        if($cartQty>$item->product->qunatityInStock)
+        {
+         return response()->json(["message"=>"not available"]);
+        }
+        $item->qty= $cartQty;
+        $item->save();
+        return response()->json(["message"=>"quantity updated (incraese)"]);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function remove(Request $request, string $id)
+    {
+        $input= $request->validate(['qty'=>['required','numeric']]);
+        $item= cart::where('productId',$id)->where('userId',auth()->id())->firstOrFail();
+        $cartQty= $item->qty - 1;
+        if($cartQty <=1)
+        {
+            $item->qty= 1;
+            $item->save();
+            return response()->json(["message"=>"minmum is 1"]);
+        }
+        $item->qty=$cartQty;
+        $item->save();
+        return response()->json(["message"=>"qunatity is updated (decrease)"]);
+    }
+
+
+
     public function destroy(string $id)
     {
         $item= cart::where('productId',$id)->where('userId',auth()->id())->firstOrFail();

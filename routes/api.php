@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\cartController;
 use App\Http\Controllers\categoryController;
+use App\Http\Controllers\orderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productController as ControllersProductController;
 use App\Http\Controllers\userProductController;
@@ -44,3 +46,6 @@ Route::group([
 
 Route::apiResource('userProduct',userProductController::class)->only(['index','show']);
 Route::get('recentUserProduct', [userProductController::class,'recent']);
+Route::apiResource('cart',cartController::class)->except('show');
+Route::post('remveItem', [cartController::class,'remove']);
+Route::apiResource('order', orderController::class)->only(['index','store']);
