@@ -13,7 +13,7 @@ class cartController extends Controller
      */
     public function index()
     {
-        $caartItems= Cart::where('userId',auth()->id())->get();
+        $caartItems= Cart::where('userId',auth('user')->id())->get();
         return cartResource::collection($caartItems);
     }
 
@@ -27,10 +27,10 @@ class cartController extends Controller
             'qty'=>['numeric','nullable']
         ]);
         $item= cart::where('productId',$input['productId'])
-        ->where('userId',auth()->id())->first();
+        ->where('userId',auth('user')->id())->first();
         if(!$item)
         {
-           $input['userId']= auth()->id();
+           $input['userId']= auth('user')->id();
            cart::create($input);
            return response()->json(["message"=>"item is added"]);
         }
@@ -60,7 +60,7 @@ class cartController extends Controller
     public function update(Request $request, string $id)
     {
         $input= $request->validate(['qty'=>['required','numeric']]);
-        $item= cart::where('productId',$id)->where('userId',auth()->id())->firstOrFail();
+        $item= cart::where('productId',$id)->where('userId',auth('user')->id())->firstOrFail();
         $cartQty=$item->qty +1;
         if($cartQty>$item->product->qunatityInStock)
         {
@@ -75,7 +75,7 @@ class cartController extends Controller
     public function remove(Request $request, string $id)
     {
         $input= $request->validate(['qty'=>['required','numeric']]);
-        $item= cart::where('productId',$id)->where('userId',auth()->id())->firstOrFail();
+        $item= cart::where('productId',$id)->where('userId',auth('user')->id())->firstOrFail();
         $cartQty= $item->qty - 1;
         if($cartQty <=1)
         {
@@ -92,7 +92,7 @@ class cartController extends Controller
 
     public function destroy(string $id)
     {
-        $item= cart::where('productId',$id)->where('userId',auth()->id())->firstOrFail();
+        $item= cart::where('productId',$id)->where('userId',auth('user')->id())->firstOrFail();
         $item->delete();
         return response()->json(["message"=>"item is deleted successfully"]);
     }

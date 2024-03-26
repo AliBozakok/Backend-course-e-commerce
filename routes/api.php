@@ -6,6 +6,7 @@ use App\Http\Controllers\categoryController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productController as ControllersProductController;
+use App\Http\Controllers\userController;
 use App\Http\Controllers\userProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,20 @@ Route::group([
 
 Route::apiResource('userProduct',userProductController::class)->only(['index','show']);
 Route::get('recentUserProduct', [userProductController::class,'recent']);
-Route::apiResource('cart',cartController::class)->except('show');
-Route::post('remveItem', [cartController::class,'remove']);
-Route::apiResource('order', orderController::class)->only(['index','store']);
+Route::post('UserRegister', [userController::class,'register']);
+Route::post('forgetPassword', [userController::class,'forgetPassword']);
+Route::post('resetPassword', [userController::class,'resetPassword']);
+
+Route::group([
+
+    'middleware' => 'auth:user',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::get('logout', [userController::class,'logout']);
+    Route::get('me', [userController::class,'me']);
+    Route::apiResource('cart',cartController::class)->except('show');
+    Route::post('remveItem', [cartController::class,'remove']);
+    Route::apiResource('order', orderController::class)->only(['index','store']);
+});

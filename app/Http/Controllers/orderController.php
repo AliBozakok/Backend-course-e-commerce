@@ -15,7 +15,7 @@ class orderController extends Controller
      */
     public function index()
     {
-        $orders= Order::where('userId',auth()->id())->get();
+        $orders= Order::where('userId',auth('user')->id())->get();
         return orderResource::collection($orders) ;
     }
 
@@ -37,7 +37,7 @@ class orderController extends Controller
         {
            $orderId= $orderId+1;
         }
-        $caartItems= cart::where('userId',auth()->id())->get();
+        $caartItems= cart::where('userId',auth('user')->id())->get();
         $orderTotal= 0;
         foreach($caartItems as $item)
         {
@@ -51,7 +51,7 @@ class orderController extends Controller
             $item->delete();
         }
         Order::create([
-            'userId'=>auth()->id(),
+            'userId'=>auth('user')->id(),
             'total'=>$orderTotal,
             'address'=>$input['address'],
             'phone'=>$input['phone']
