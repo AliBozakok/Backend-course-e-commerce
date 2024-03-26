@@ -12,10 +12,10 @@ class userProductController extends Controller
      */
     public function index(Request $request)
     {
-        $q=product::query();
-        if($request->has('tilte'))
+        $q=Product::query();
+        if($request->has('title'))
         {
-            $q->where('title','LIKE',$request->tilte.'%');
+            $q->where('title','LIKE',$request->title.'%');
         }
        // $prodcuts= product::getActive()->get();
        $products= $q->getActive()->get();
@@ -30,7 +30,7 @@ class userProductController extends Controller
 
    public function recent()
    {
-    $products= product::getActive()->orderBy('craeted_at','desc')->get();
+    $products= product::getActive()->orderBy('created_at','desc')->get();
     return response()->json(["data"=>$products]);
    }
 }

@@ -50,6 +50,7 @@ Route::get('recentUserProduct', [userProductController::class,'recent']);
 Route::post('UserRegister', [userController::class,'register']);
 Route::post('forgetPassword', [userController::class,'forgetPassword']);
 Route::post('resetPassword', [userController::class,'resetPassword']);
+Route::post('userlogin', [userController::class,'login']);
 
 Route::group([
 
