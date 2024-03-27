@@ -12,14 +12,21 @@ class userProductController extends Controller
      */
     public function index(Request $request)
     {
-        $q=Product::query();
-        if($request->has('title'))
-        {
+    //     $q=Product::query();
+    //     if($request->has('title'))
+    //     {
+    //         $q->where('title','LIKE',$request->title.'%');
+    //     }
+    //    // $prodcuts= product::getActive()->get();
+    //    $products= $q->getActive()->get();
+    //     return response()->json(["data"=>$products]);
+    $q = Product::query();
+
+        if(request()->has('title'))
             $q->where('title','LIKE',$request->title.'%');
-        }
-       // $prodcuts= product::getActive()->get();
-       $products= $q->getActive()->get();
-        return response()->json(["data"=>$products]);
+
+        $products = $q->get();
+        return response()->json([ 'data'=>$products]);
     }
 
     public function show(string $id)

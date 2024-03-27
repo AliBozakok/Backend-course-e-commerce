@@ -20,11 +20,15 @@ class product extends Model
 
     public function category()
     {
-        $this->belongsTo(Category::class,'categoryId','id');
+        return  $this->belongsTo(Category::class,'categoryId','id');
     }
 
     public function scopeGetActive()
     {
-        return $this->where('qunatityInStock','!=',0);
+        return $this->where('qunatityInStock','>=',0);
+    }
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
     }
 }

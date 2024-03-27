@@ -62,6 +62,6 @@ Route::group([
     Route::get('logout', [userController::class,'logout']);
     Route::get('me', [userController::class,'me']);
     Route::apiResource('cart',cartController::class)->except('show');
-    Route::post('remveItem', [cartController::class,'remove']);
+    Route::put('removeItem/{id}', [cartController::class,'remove']);
     Route::apiResource('order', orderController::class)->only(['index','store']);
 });

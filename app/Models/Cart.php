@@ -17,7 +17,7 @@ class Cart extends Model
 
     public function product()
     {
-        $this->belongsTo(product::class,'productId','id');
+       return $this->belongsTo(Product::class,'productId','id');
     }
 
     protected $appends=['total'];

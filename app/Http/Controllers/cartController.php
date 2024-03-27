@@ -60,8 +60,8 @@ class cartController extends Controller
     public function update(Request $request, string $id)
     {
         $input= $request->validate(['qty'=>['required','numeric']]);
-        $item= cart::where('productId',$id)->where('userId',auth('user')->id())->firstOrFail();
-        $cartQty=$item->qty +1;
+        $item= cart::where('productId',$id)->where('userId',auth('user')->id())->first();
+        $cartQty=$item->qty + $input['qty'];
         if($cartQty>$item->product->qunatityInStock)
         {
          return response()->json(["message"=>"not available"]);

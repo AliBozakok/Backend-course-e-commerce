@@ -31,17 +31,17 @@ class orderController extends Controller
         $orderId= Order::latest()->first();
         if($orderId == null)
         {
-           $orderId=1;
+           $orderId= 1;
         }
         else
         {
-           $orderId= $orderId+1;
+           $orderId= $orderId->id  + 1;
         }
         $caartItems= cart::where('userId',auth('user')->id())->get();
         $orderTotal= 0;
         foreach($caartItems as $item)
         {
-            OrderItem::craete([
+            OrderItem::create([
                 'orderId'=>$orderId,
                 'productId'=>$item->productId,
                 'qty'=>$item->qty
