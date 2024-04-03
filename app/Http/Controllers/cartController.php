@@ -62,6 +62,7 @@ class cartController extends Controller
         $input= $request->validate(['qty'=>['required','numeric']]);
         $item= cart::where('productId',$id)->where('userId',auth('user')->id())->first();
         $cartQty=$item->qty + $input['qty'];
+
         if($cartQty>$item->product->qunatityInStock)
         {
          return response()->json(["message"=>"not available"]);
@@ -81,7 +82,7 @@ class cartController extends Controller
         {
             $item->qty= 1;
             $item->save();
-            return response()->json(["message"=>"minmum is 1"]);
+            return response()->json(["message"=>"minimum is 1"]);
         }
         $item->qty=$cartQty;
         $item->save();

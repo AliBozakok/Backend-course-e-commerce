@@ -25,7 +25,7 @@ class product extends Model
 
     public function scopeGetActive()
     {
-        return $this->where('qunatityInStock','>=',0);
+        return $this->where('qunatityInStock','>',0);
     }
     public function cart()
     {
